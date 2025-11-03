@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-weight: 400;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            padding: 60px 50px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 300;
+            color: #000;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+        }
+
+        .btn {
+            padding: 14px 40px;
+            border: 1px solid #000;
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            font-family: 'Noto Sans TC', sans-serif;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #888;
+            border-color: #ccc;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 40px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 400;
+            color: #666;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            background: transparent;
+            font-family: 'Noto Sans TC', sans-serif;
+            color: #000;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-bottom-color: #000;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            border: 1px solid #e8e8e8;
+            padding: 12px;
+        }
+
+        textarea:focus {
+            border-color: #000;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #999;
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .checkbox-group label, .radio-group label {
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .checkbox-group input, .radio-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: #ff4444;
+        }
+
+        .required {
+            color: #ff4444;
+        }
+
+        .form-actions {
+            text-align: left;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 40px 30px;
+            }
+
+            body {
+                padding: 30px 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-bottom: 40px;
+            }
+
+            .form-actions {
+                margin-top: 40px;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+                font-size: 12pt;
+            }
+
+            .alert,
+            .btn,
+            .form-actions,
+            .toast {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            .card {
+                border: none;
+                padding: 0;
+                box-shadow: none;
+                background: #fff !important;
+            }
+
+            h2 {
+                font-size: 24pt;
+                margin: 30pt 0 25pt 0;
+                font-weight: 500;
+                border-bottom: 2pt solid #000;
+                padding-bottom: 10pt;
+                text-align: center;
+                letter-spacing: 2pt;
+            }
+
+            .form-group {
+                margin-bottom: 18pt;
+                page-break-inside: avoid;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+            }
+
+            label {
+                font-weight: 500;
+                font-size: 11pt;
+                margin-right: 8pt;
+                margin-bottom: 3pt;
+                width: auto;
+                min-width: 80pt;
+            }
+
+            .required {
+                display: none !important;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            input[type="date"],
+            textarea,
+            select {
+                border: none !important;
+                border-bottom: none !important;
+                padding: 4pt 0;
+                font-size: 12pt;
+                background: transparent !important;
+                outline: none !important;
+                flex: 1;
+                min-width: 150pt;
+                box-shadow: none !important;
+            }
+
+            select {
+                appearance: none;
+                -webkit-appearance: none;
+                background-image: none;
+            }
+
+            textarea {
+                border: none !important;
+                padding: 8pt 0;
+                min-height: 80pt;
+                width: 100%;
+                resize: none;
+                box-shadow: none !important;
+            }
+
+            .checkbox-group,
+            .radio-group {
+                margin-top: 0;
+                width: 100%;
+                margin-left: 88pt;
+            }
+
+            .checkbox-group label,
+            .radio-group label {
+                margin-bottom: 6pt;
+                display: block !important;
+                font-weight: 400;
+                width: auto;
+                min-width: auto;
+                position: relative;
+            }
+
+            input[type="checkbox"],
+            input[type="radio"] {
+                width: 14pt;
+                height: 14pt;
+                margin-right: 6pt;
+                margin-left: 0;
+                vertical-align: middle;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .signature-section {
+                display: block !important;
+                margin-top: 50pt;
+                padding-top: 30pt;
+                border-top: 1pt solid #000;
+            }
+
+            .signature-line {
+                display: inline-block;
+                width: 150pt;
+                border-bottom: 1pt solid #000;
+                margin: 0 15pt;
+                height: 30pt;
+                vertical-align: bottom;
+            }
+
+            .signature-section strong {
+                font-weight: 500;
+                font-size: 11pt;
+                margin-right: 10pt;
+            }
+
+            @page {
+                margin: 20mm 15mm;
+                size: A4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 id="formTitle">測試</h2>
+            <form id="userForm">
+                <div id="formFields"></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">提交</button>
+                    <button type="reset" class="btn btn-secondary">清除</button>
+                    <button type="button" class="btn btn-secondary" onclick="printForm()">列印</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        const formData = {
+        "name": "測試",
+        "spreadsheetId": "1bMLvrZJW98M0UWpUcFQL6sRgPnsgBQZ_ZTUDr_-GJ_Q",
+        "appsScriptUrl": "https://script.google.com/macros/s/AKfycbw_jscoUhYC4oSDyZuANKrHWBfg4ZLjE_oXwPCmw6pdPToSOOnWqO-ANUSKCTW30_LYSg/exec",
+        "items": [
+                {
+                        "type": "text",
+                        "label": "測試",
+                        "name": "測試",
+                        "required": true
+                }
+        ],
+        "signatures": [
+                {
+                        "label": "申請人簽名"
+                }
+        ]
+};
+        
+        // 載入申請表
+        function loadForm() {
+            document.getElementById('formTitle').textContent = formData.name;
+            const container = document.getElementById('formFields');
+            
+            formData.items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'form-group';
+
+                const label = document.createElement('label');
+                label.innerHTML = item.label + (item.required ? '<span class="required"> *</span>' : '');
+                div.appendChild(label);
+
+                let input;
+                switch(item.type) {
+                    case 'textarea':
+                        input = document.createElement('textarea');
+                        input.name = item.name;
+                        if (item.required) input.required = true;
+                        div.appendChild(input);
+                        break;
+
+                    case 'select':
+                        input = document.createElement('select');
+                        input.name = item.name;
+                        if (item.required) input.required = true;
+                        
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = '選擇';
+                        input.appendChild(defaultOption);
+                        
+                        if (item.options) {
+                            item.options.forEach(opt => {
+                                const option = document.createElement('option');
+                                option.value = opt;
+                                option.textContent = opt;
+                                input.appendChild(option);
+                            });
+                        }
+                        div.appendChild(input);
+                        break;
+
+                    case 'radio':
+                        const radioGroup = document.createElement('div');
+                        radioGroup.className = 'radio-group';
+                        if (item.options) {
+                            item.options.forEach((opt, idx) => {
+                                const radioDiv = document.createElement('label');
+                                const radio = document.createElement('input');
+                                radio.type = 'radio';
+                                radio.name = item.name;
+                                radio.value = opt;
+                                if (item.required) radio.required = true;
+                                
+                                radioDiv.appendChild(radio);
+                                radioDiv.appendChild(document.createTextNode(opt));
+                                radioGroup.appendChild(radioDiv);
+                            });
+                        }
+                        div.appendChild(radioGroup);
+                        break;
+
+                    case 'checkbox':
+                        const checkboxGroup = document.createElement('div');
+                        checkboxGroup.className = 'checkbox-group';
+                        if (item.options) {
+                            item.options.forEach(opt => {
+                                const checkboxDiv = document.createElement('label');
+                                const checkbox = document.createElement('input');
+                                checkbox.type = 'checkbox';
+                                checkbox.name = item.name;
+                                checkbox.value = opt;
+                                
+                                checkboxDiv.appendChild(checkbox);
+                                checkboxDiv.appendChild(document.createTextNode(opt));
+                                checkboxGroup.appendChild(checkboxDiv);
+                            });
+                        }
+                        div.appendChild(checkboxGroup);
+                        break;
+
+                    case 'date':
+                        input = document.createElement('input');
+                        input.type = 'date';
+                        input.name = item.name;
+                        if (item.required) input.required = true;
+                        div.appendChild(input);
+                        break;
+
+                    case 'email':
+                        input = document.createElement('input');
+                        input.type = 'email';
+                        input.name = item.name;
+                        if (item.required) input.required = true;
+                        div.appendChild(input);
+                        break;
+
+                    case 'number':
+                        input = document.createElement('input');
+                        input.type = 'number';
+                        input.name = item.name;
+                        if (item.required) input.required = true;
+                        div.appendChild(input);
+                        break;
+
+                    default:
+                        input = document.createElement('input');
+                        input.type = 'text';
+                        input.name = item.name;
+                        if (item.required) input.required = true;
+                        div.appendChild(input);
+                }
+
+                container.appendChild(div);
+            });
+            
+            // 添加簽名區域（列印時使用）
+            if (formData.signatures && formData.signatures.length > 0) {
+                const signatureDiv = document.createElement('div');
+                signatureDiv.className = 'signature-section';
+                signatureDiv.style.display = 'none';
+                
+                let signatureHTML = '';
+                formData.signatures.forEach(sig => {
+                    signatureHTML += `
+                        <div style="margin-bottom: 30px;">
+                            <strong>${sig.label}：</strong>
+                            <span class="signature-line"></span>
+                        </div>
+                    `;
+                });
+                
+                signatureDiv.innerHTML = signatureHTML;
+                container.appendChild(signatureDiv);
+            }
+        }
+
+        // 表單提交
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitForm();
+        });
+
+        // 提交表單
+        function submitForm() {
+            const formElement = document.getElementById('userForm');
+            const formData_obj = new FormData(formElement);
+            
+            // 收集表單資料
+            const data = {};
+            data['提交時間'] = new Date().toLocaleString('zh-TW');
+            
+            for (let [key, value] of formData_obj.entries()) {
+                // 處理複選框
+                const checkboxes = formElement.querySelectorAll(`[name="${key}"]:checked`);
+                if (checkboxes.length > 1) {
+                    data[key] = Array.from(checkboxes).map(cb => cb.value).join(', ');
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // 準備傳送到 Google Sheets
+            sendToGoogleSheets(formData.spreadsheetId, formData.appsScriptUrl, data);
+        }
+
+        // 傳送資料到 Google Sheets
+        async function sendToGoogleSheets(spreadsheetId, appsScriptUrl, data) {
+            if (!spreadsheetId) {
+                showAlert('尚未設定試算表 ID', 'error');
+                return;
+            }
+
+            showAlert('提交中...', 'success');
+            
+            try {
+                if (appsScriptUrl) {
+                    const response = await fetch(appsScriptUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify({ 
+                            spreadsheetId: spreadsheetId, 
+                            rowData: data 
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showAlert('提交成功', 'success');
+                        setTimeout(() => {
+                            printForm();
+                            setTimeout(() => {
+                                document.getElementById('userForm').reset();
+                            }, 3000);
+                        }, 500);
+                    } else {
+                        showAlert('提交失敗', 'error');
+                    }
+                } else {
+                    console.log('表單資料：', data);
+                    console.log('試算表 ID：', spreadsheetId);
+                    
+                    setTimeout(() => {
+                        showAlert('提交成功（測試模式）', 'success');
+                        setTimeout(() => {
+                            printForm();
+                            setTimeout(() => {
+                                document.getElementById('userForm').reset();
+                            }, 3000);
+                        }, 1000);
+                    }, 1000);
+                }
+            } catch (error) {
+                showAlert('提交失敗', 'error');
+                console.error('提交錯誤：', error);
+            }
+        }
+
+        // 顯示提示訊息
+        function showAlert(message, type) {
+            const oldToast = document.querySelector('.toast');
+            if (oldToast) {
+                oldToast.remove();
+            }
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast' + (type === 'error' ? ' error' : '');
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // 列印表單
+        function printForm() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            const allRadios = document.querySelectorAll('input[type="radio"]');
+            
+            allCheckboxes.forEach(cb => {
+                if (!cb.checked) {
+                    cb.parentElement.style.display = 'none';
+                }
+            });
+            
+            allRadios.forEach(rb => {
+                if (!rb.checked) {
+                    rb.parentElement.style.display = 'none';
+                }
+            });
+            
+            window.print();
+            
+            setTimeout(() => {
+                allCheckboxes.forEach(cb => {
+                    cb.parentElement.style.display = '';
+                });
+                
+                allRadios.forEach(rb => {
+                    rb.parentElement.style.display = '';
+                });
+            }, 100);
+        }
+
+        // 頁面載入時讀取申請表
+        window.addEventListener('DOMContentLoaded', loadForm);
+        </script>
+</body>
+</html>
